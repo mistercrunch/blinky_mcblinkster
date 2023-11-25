@@ -1,7 +1,15 @@
+# Blinky McBlinkster
+
 A project to drive ws2811 LED strings with python and raspberry PI
 
 Notes:
 - following instructions found [here](https://learn.adafruit.com/neopixels-on-raspberry-pi/overview)
+- don't forget to turn the audio off as mentioned [here](https://learn.adafruit.com/neopixels-on-raspberry-pi/python-usage). 
+
+
+```
+Sound must be disabled to use GPIO18. This can be done in /boot/config.txt by changing "dtparam=audio=on" to "dtparam=audio=off" and rebooting. Failing to do so can result in a segmentation fault.
+```
 
 Hardware:
 - [Raspberry Pi Zero W](https://www.amazon.com/gp/product/B06XFZC3BX/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1)
