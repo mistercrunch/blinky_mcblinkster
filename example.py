@@ -51,7 +51,7 @@ def rainbow_cycle(wait):
             pixel_index = (i * 256 // num_pixels) + j
             pixels[i] = wheel(pixel_index & 255)
         pixels.show()
-        #time.sleep(wait)
+        # time.sleep(wait)
 
 
 while True:
@@ -77,4 +77,3 @@ while True:
     time.sleep(1)
 
     rainbow_cycle(0.001)  # rainbow cycle with 1ms delay per step
-
