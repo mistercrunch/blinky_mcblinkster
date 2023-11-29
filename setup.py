@@ -10,7 +10,6 @@ setup(
     packages=find_packages(),  # Automatically find all packages in the project
     install_requires=[
         # Add your project dependencies here
-        "pygame",  # Example dependency, replace with your actual dependencies
         # 'another-package==version',
     ],
     classifiers=[
