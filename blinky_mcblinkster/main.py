@@ -14,7 +14,7 @@ XMAS_COLORS = [
 def gen_xmas_color():
     return random.choice(XMAS_COLORS)
 
-ENV = "NEO"
+ENV = "NEOA"
 LED_COUNT = 500
 strand = Strand(LED_COUNT)
 

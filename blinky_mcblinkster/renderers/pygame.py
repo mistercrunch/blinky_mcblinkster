@@ -63,12 +63,11 @@ class PyGameRenderer(BaseRenderer):
         return int(x), int(y)
 
     def render_strand(self, strand):
-        for pixel in strand.pixels:
-            color = pixel.get_current_color()
+        for i, pixel in enumerate(strand.pixels):
             pygame.draw.circle(
                 self.screen,
-                color.to_tuple(),
-                self.get_pixel_position(pixel.pos),
+                pixel,
+                self.get_pixel_position(i),
                 CIRCLE_SIZE,
             )
         if self.show_fps:
