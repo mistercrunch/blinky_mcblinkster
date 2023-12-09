@@ -3,9 +3,13 @@ import random
 
 class Color:
     def __init__(self, r=None, g=None, b=None):
-        self.r = r
-        self.g = g
-        self.b = b
+        if r is None and g is None and b is None:
+            self.set_random()
+        else:
+            self.r = r
+            self.g = g
+            self.b = b
+
 
     def set_random(self):
         self.r = random.randint(0, 90)
@@ -24,4 +28,4 @@ class Color:
     def to_tuple(self, intify=True):
         if intify:
             return (int(self.r), int(self.g), int(self.b))
-        return (self.r, self.g, self.b)
+        return self.to_rgb_tuple()

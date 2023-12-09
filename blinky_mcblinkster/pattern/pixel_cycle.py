@@ -5,18 +5,18 @@ from blinky_mcblinkster.color import Color
 from blinky_mcblinkster import constants
 
 
-class ColorMode:
+class BlinkMode:
     LINEAR_UP_DOWN = 1
     BLINK = 2
 
 
 class Pixel:
-    def __init__(self, pos, colors):
+    def __init__(self, pos, colors, mode=BlinkMode.LINEAR_UP_DOWN, blink_duration=1000):
         self.pos = pos
         self.colors = colors
         self.frame = 0
-        self.mode = ColorMode.LINEAR_UP_DOWN
-        self.mode = ColorMode.BLINK
+        self.blink_duration = blink_duration
+        self.mode = mode
         self.new_cycle()
         self.randomize_frame()
 
@@ -31,24 +31,25 @@ class Pixel:
             self.frame += 1
 
     def new_cycle(self):
-        self.set_cycle_duration()
-        if self.mode in [ColorMode.LINEAR_UP_DOWN, ColorMode.BLINK]:
+        self.set_cycle_duration(self.blink_duration)
+        if self.mode in [BlinkMode.LINEAR_UP_DOWN, BlinkMode.BLINK]:
             self.color = random.choice(self.colors)
 
-    def set_cycle_duration(self, ms=1, randomness=0.1):
+    def set_cycle_duration(self, ms=1000, randomness=0.1):
         cycle = (ms / 1000) * constants.FPS
         self.cycle = int(cycle + (random.random() * cycle * randomness))
 
     def get_current_color(self):
-        if self.mode == ColorMode.LINEAR_UP_DOWN:
+
+        if self.mode == BlinkMode.LINEAR_UP_DOWN:
             half_cycle = int(self.cycle / 2) + 1
             if self.frame <= half_cycle:
                 dim = self.frame / half_cycle
             else:
                 dim = 1 - ((self.frame - half_cycle) / half_cycle)
-            # print(f"frame:{self.frame} cycle:{self.cycle} hc:{half_cycle} dim:{dim}")
             return self.color.dim(dim)
-        elif self.mode == ColorMode.BLINK:
+
+        elif self.mode == BlinkMode.BLINK:
             half_cycle = int(self.cycle / 2) + 1
             if self.frame <= half_cycle:
                 return self.color
@@ -57,11 +58,15 @@ class Pixel:
 
 
 class PixelCyclePattern(BasePattern):
-    def __init__(self, strand, colors):
+    def __init__(self, strand, colors, mode=BlinkMode.LINEAR_UP_DOWN, blink_duration=1000):
         self.strand = strand
-        self.pixels = [Pixel(i, colors) for i in range(strand.led_count)]
+        self.pixels = [
+            Pixel(i, colors, mode, blink_duration)
+            for i in range(strand.led_count)
+        ]
         self.colors = colors
 
     def next_frame(self):
         for pixel in self.pixels:
             pixel.compute_frame()
+        self.strand.pixels = [pixel.get_current_color().to_tuple() for i, pixel in enumerate(self.pixels)]

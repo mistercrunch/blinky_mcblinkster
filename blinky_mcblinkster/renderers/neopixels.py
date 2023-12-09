@@ -24,11 +24,9 @@ class NeoPixelRenderer(BaseRenderer):
         self.last_frame_count = 0
         self.last_fps_print = datetime.now()
 
-    def render_frame(self, strand):
-        for pixel in strand.pixels:
-            color = pixel.get_current_color()
-            self.neo_pixels[pixel.pos] = pixel.get_current_color().to_tuple()
-            # self.neo_pixels[pixel.pos] = c
+    def render_strand(self, strand):
+        for i, color_typle in enumerate(strand.pixels):
+            self.neo_pixels[i] = color_typle
         self.neo_pixels.show()
         self.frame_count += 1
         self.print_fps()

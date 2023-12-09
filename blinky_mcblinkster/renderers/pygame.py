@@ -62,7 +62,7 @@ class PyGameRenderer(BaseRenderer):
 
         return int(x), int(y)
 
-    def render_frame(self, strand):
+    def render_strand(self, strand):
         for pixel in strand.pixels:
             color = pixel.get_current_color()
             pygame.draw.circle(
