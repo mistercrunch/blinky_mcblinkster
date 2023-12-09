@@ -1,10 +1,4 @@
-
 class BaseRenderer:
-
-    def animate(self, strand):
+    def animate(self, pattern):
         while True:
-            strand.compute_frame()
-            self.render_frame(strand)
-
-    def render_frame(self, strand):
-        return NotImplementedError()
+            pattern.next_frame()

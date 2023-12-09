@@ -6,15 +6,15 @@ from blinky_mcblinkster import constants
 
 CIRCLE_SIZE = 2
 
-class PyGameRenderer(BaseRenderer):
 
+class PyGameRenderer(BaseRenderer):
     def __init__(self, size, width=800, height=600, show_fps=False):
         pygame.init()
         self.width = width
         self.height = height
         self.size = size
         self.screen = pygame.display.set_mode((width, height))
-        pygame.display.set_caption('Blinky McBlinkster')
+        pygame.display.set_caption("Blinky McBlinkster")
         self.clock = pygame.time.Clock()
         self.start_time = pygame.time.get_ticks()
 
@@ -36,7 +36,6 @@ class PyGameRenderer(BaseRenderer):
             self.last_fps_print_time = current_time
             self.frame_count = 0
             self.start_time = pygame.time.get_ticks()
-
 
     def get_pixel_position(self, pixel_position):
         # Calculate the number of levels for the triangle
