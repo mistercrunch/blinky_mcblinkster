@@ -16,3 +16,13 @@ Hardware:
 - [connectors](https://www.amazon.com/gp/product/B083GQPM3G/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1)
 - [the string lights](https://www.amazon.com/gp/product/B06XSFT1VK/ref=ppx_yo_dt_b_asin_image_o06_s00?ie=UTF8&psc=1)
 - [a power supply](https://www.amazon.com/gp/product/B06XJVYDDW/ref=ppx_yo_dt_b_asin_title_o06_s00?ie=UTF8&psc=1)
+
+# PI run on boot
+
+```bash
+sudo su
+cp blinky.service /etc/systemd/system/
+sudo systemctl start blinky
+sudo systemctl stop blinky
+sudo systemctl enable blinky
+```

@@ -1,0 +1,13 @@
+# /etc/systemd/system/blinky.service
+
+[Unit]
+Description=Blinky
+
+[Service]
+ExecStart=/home/max/code/blinky_mcblinkster/init.sh
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+
