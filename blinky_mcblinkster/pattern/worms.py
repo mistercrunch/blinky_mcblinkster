@@ -4,15 +4,15 @@ from blinky_mcblinkster.pattern.base import BasePattern
 from blinky_mcblinkster.color import Color
 from blinky_mcblinkster import constants
 
-BLACK_TUPLE = Color(0 ,0 ,0).to_tuple()
+BLACK_TUPLE = Color(0, 0, 0).to_tuple()
+
 
 class Worm:
     def __init__(self, length=6, pix_per_second=60, color=None):
         self.length = length
-        self.pix_per_second = pix_per_second + (random.random() * (pix_per_second/5))
+        self.pix_per_second = pix_per_second + (random.random() * (pix_per_second / 5))
         self.pos = random.random() * 500
         self.color = color or Color()
-
 
     def compute_frame(self):
         self.pos += self.pix_per_second / constants.FPS

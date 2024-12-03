@@ -8,6 +8,7 @@ from blinky_mcblinkster import constants
 class BlinkMode:
     LINEAR_UP_DOWN = 1
     BLINK = 2
+    FADE_TO = 3
 
 
 class Pixel:
@@ -33,14 +34,17 @@ class Pixel:
     def new_cycle(self):
         self.set_cycle_duration(self.blink_duration)
         if self.mode in [BlinkMode.LINEAR_UP_DOWN, BlinkMode.BLINK]:
-            self.color = random.choice(self.colors)
+            if callable(self.colors):
+                color = self.colors()
+            else:
+                color = random.choice(colors)
+            self.color = color
 
     def set_cycle_duration(self, ms=1000, randomness=0.1):
         cycle = (ms / 1000) * constants.FPS
         self.cycle = int(cycle + (random.random() * cycle * randomness))
 
     def get_current_color(self):
-
         if self.mode == BlinkMode.LINEAR_UP_DOWN:
             half_cycle = int(self.cycle / 2) + 1
             if self.frame <= half_cycle:
@@ -58,15 +62,18 @@ class Pixel:
 
 
 class PixelCyclePattern(BasePattern):
-    def __init__(self, strand, colors, mode=BlinkMode.LINEAR_UP_DOWN, blink_duration=1000):
+    def __init__(
+        self, strand, colors, mode=BlinkMode.LINEAR_UP_DOWN, blink_duration=1000
+    ):
         self.strand = strand
         self.pixels = [
-            Pixel(i, colors, mode, blink_duration)
-            for i in range(strand.led_count)
+            Pixel(i, colors, mode, blink_duration) for i in range(strand.led_count)
         ]
         self.colors = colors
 
     def next_frame(self):
         for pixel in self.pixels:
             pixel.compute_frame()
-        self.strand.pixels = [pixel.get_current_color().to_tuple() for i, pixel in enumerate(self.pixels)]
+        self.strand.pixels = [
+            pixel.get_current_color().to_tuple() for i, pixel in enumerate(self.pixels)
+        ]
